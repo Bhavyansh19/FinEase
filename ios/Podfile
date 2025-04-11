@@ -1,0 +1,48 @@
+# Define a global platform for the project. Uncomment and adjust the version as needed.
+platform :ios, '14.0'
+
+# Disable CocoaPods analytics to reduce build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+# Define build configurations for the project.
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
+# Helper to locate the Flutter SDK
+def flutter_root
+  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+  unless File.exist?(generated_xcode_build_settings_path)
+    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
+  end
+
+  File.foreach(generated_xcode_build_settings_path) do |line|
+    matches = line.match(/FLUTTER_ROOT\=(.*)/)
+    return matches[1].strip if matches
+  end
+  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
+end
+
+# Include Flutter's CocoaPods integration file.
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+
+# Set up Flutter-specific configurations for the Podfile.
+flutter_ios_podfile_setup
+
+# Define the main target for the Runner app.
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  # Install all necessary Flutter iOS pods.
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
+
+# Post-install configurations to apply additional build settings.
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+  end
+end

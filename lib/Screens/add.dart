@@ -26,7 +26,7 @@ class _Add_ScreenState extends State<Add_Screen> {
   ];
   final List<String> _itemei = [
     'Income',
-    "Expand",
+    "Expense",
   ];
   @override
   void initState() {

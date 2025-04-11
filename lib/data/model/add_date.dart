@@ -14,4 +14,6 @@ class Add_data extends HiveObject {
   @HiveField(4)
   DateTime datetime;
   Add_data(this.IN, this.amount, this.datetime, this.explain, this.name);
+
+  static fromJson(item) {}
 }

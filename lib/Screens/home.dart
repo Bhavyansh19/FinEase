@@ -24,6 +24,19 @@ class _HomeState extends State<Home> {
     'saturday',
     'sunday'
   ];
+
+  // Function to get greeting based on time of day
+  String getGreeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good morning';
+    } else if (hour < 17) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +169,7 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Good afternoon',
+                          getGreeting(), // Use dynamic greeting based on time
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
@@ -164,7 +177,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Text(
-                          'Enjelin Morgeana',
+                          'Bhavyansh Jain',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20,
